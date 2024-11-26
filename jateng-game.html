@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Sosial</title>
+    <style>
+               :root {
+    --c1    : #F6FCDF;
+    --c2    : #859F3D;
+    --c3    : #31511E;
+    --c4    : #1A1A19;
+    --s1    : #DFF2EB;
+    --s2    : #B9E5E8;
+    --s3    : #7AB2D3;  
+    --s4    : #4A628A; 
+
+}
+
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url(css/img/Jateng.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 20px;
+            color: var(--c1);
+            /* position: relative; */
+            /* overflow: hidden; */
+        }
+
+        .rules {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--c1);
+            z-index: 2;
+            color: var(--c4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+        }
+
+        .container-rules {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .container-rules .image-rules {
+            display: flex;
+            justify-content: center;
+            width: 30%;
+            height: 100%;
+            /* border: 1px solid; */
+        }
+
+        .list-rules {
+            width: 70%;
+            height: 100%;
+            /* border: 1px solid; */
+        }
+
+        .list-rules h3 {
+            text-align: center;
+        }
+        .list-rules ul {
+            padding-left: 0.5rem;
+            margin: 0;
+            color: var(--c4);
+            list-style-type: none;
+            text-align: justify;
+            /* margin-bottom: 1rem; */
+            /* border: 1px solid;    */
+        }
+
+        .list-rules ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .list-rules button {
+            position: relative;
+            top: 6rem;
+            left: 18.5rem;
+            width: 6rem;
+            height: 3rem;
+            font-size: 1.8rem;
+            background-color: var(--c2);
+            border: transparent;
+            border-radius: 0.4rem;
+            transition: 0.3s;
+            
+        }
+
+        .list-rules button:hover {
+            background-color: var(--c4);
+            color: var(--c1);
+        }
+
+        #puzzle-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            /* align-items: center; */
+            /* padding: 5%; */
+            margin: 20px 0;
+        }
+
+        .piece {
+            background-color: #fff;
+            color: var(--c4);
+            border: 1px solid var(--c2);
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            width: 200px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* margin-top: 10%; */
+            /* align-items: center; */
+            transition: background-color 0.3s, border 0.3s;
+        }
+
+        .selected {
+            border: 2px solid #007bff;
+        }
+
+        .correct {
+            background-color: #90ee90;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .incorrect {
+            background-color: #ffcccb;
+        }
+
+        #timer {
+            margin-top: 20px;
+            font-size: 20px;
+            display: block;
+        }
+
+        #scoreMuncul {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #007bff;
+            display: block; /* Hidden initially */
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        #finishButton {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            position: relative;
+            left: 43.5%;
+        }
+
+        #nextPageButton {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            display: none; /*Hidden initially*/
+            position: relative;
+            left: 42%;
+        }
+
+        
+
+    </style>
+</head>
+
+<body>
+    <div id="rules-PW" class="rules">
+        <h1>Puzzle Sosial</h1>
+        <p>Baca dan pelajari aturan di bawah ini</p>
+        <div class="container-rules">
+            <div class="image-rules">
+                <img src="css/img/main-char.png" alt="">
+            </div> 
+            <div class="list-rules">
+                <h3>Cara bermain</h3>
+                <ul>
+                    <li>1. Setelah belajar tentang peran lembaga sosial, mari cocokkan pertanyanaan dan jawaban yang ada!</li>
+                    <li>2. Klik setiap kotak untuk mencocokkan keduanya</li>
+                    <li>3. Terdapat 9 pasang kotak yang harus kamu cocokkan</li>
+                    <li>3. Klik "Periksa jawaban" untuk mendapatkan skor kamu!</li>
+                </ul>
+                <button id="startPuzzleWord">Mulai</button>
+            </div>
+        </div>
+    </div>
+    <h1>Puzzle Sosial</h1>
+    <div id="puzzle-container">
+        <div class="piece question" data-answer="Penyimpangan">Apa istilah untuk perilaku yang tidak sesuai dengan norma?</div>
+        <div class="piece answer" data-correct="Penyimpangan">Penyimpangan</div>
+
+        <div class="piece question" data-answer="Pengendalian Sosial">Mekanisme apa yang diperlukan untuk menjaga keteraturan dalam masyarakat?</div>
+        <div class="piece answer" data-correct="Pengendalian Sosial">Pengendalian Sosial</div>
+
+        <div class="piece question" data-answer="John M. Shepard">Siapa yang mendefinisikan konformitas?</div>
+        <div class="piece answer" data-correct="John M. Shepard">John M. Shepard</div>
+
+        <div class="piece question" data-answer="Media Massa">Lembaga mana yang berperan dalam kontrol sosial?</div>
+        <div class="piece answer" data-correct="Media Massa">Media Massa</div>
+
+        <div class="piece question" data-answer="Penyimpangan Primer">Jenis penyimpangan apa yang masih dapat diterima masyarakat?</div>
+        <div class="piece answer" data-correct="Penyimpangan Primer">Penyimpangan Primer</div>
+
+        <div class="piece question" data-answer="Tokoh Masyarakat">Siapa yang memberikan keteladanan dalam masyarakat?</div>
+        <div class="piece answer" data-correct="Tokoh Masyarakat">Tokoh Masyarakat</div>
+
+        <div class="piece question" data-answer="Tekanan Sosial">Apa yang mendorong individu untuk mengikuti norma kelompok?</div>
+        <div class="piece answer" data-correct="Tekanan Sosial">Tekanan Sosial</div>
+
+        <div class="piece question" data-answer="Keajegan">Apa istilah untuk keteraturan yang konsisten berkat penerapan nilai dan norma yang berkelanjutan?</div>
+        <div class="piece answer" data-correct="Keajegan">Keajegan</div>
+
+        <div class="piece question" data-answer="Sosialisasi">Proses di mana individu mempelajari norma dan nilai sosial dari masyarakat disebut?</div>
+        <div class="piece answer" data-correct="Sosialisasi">Sosialisasi</div>
+    </div>
+
+    <div id="timer">Waktu: <span id="time">120</span> detik</div>
+    <div id="scoreMuncul"><span id="finalScore"></span></div>
+    <div id="result"></div>
+    <button id="finishButton" onclick="endGame()">Periksa Jawaban</button>
+    <button id="nextPageButton" onclick="goToNextPage()">Ke Halaman Berikutnya</button>
+
+    <div>
+        <audio id="audioBg" loop>
+            <source src="audio/This Old Man (instrumental) - The Green Orbs.mp3">
+        </audio>
+    </div>
+
+    <script>
+        const pieces = Array.from(document.querySelectorAll('.piece'));
+        const timeDisplay = document.getElementById('time');
+        const scoreMuncul = document.getElementById('scoreMuncul');
+        const scoreDisplay = document.getElementById('finalScore');
+        const result = document.getElementById('result');
+        const finishButton = document.getElementById('finishButton');
+        const nextPageButton = document.getElementById('nextPageButton');
+        const audioBg = document.getElementById('audioBg');
+        let selectedPieces = [];
+        let correctPairs = 0;
+        const totalPairs = 9; // Total updated to 10
+        let scorePuzzleWord = 0;
+        let timerInterval;
+        let timeRemaining = 120; // waktu dalam detik
+
+        const rulesPage = document.getElementById('rules-PW');
+        const startPuzzleWord = document.getElementById('startPuzzleWord');
+
+        startPuzzleWord.onclick = function () {
+            rulesPage.style.display = "none";
+            audioBg.volume = 0.3;
+            audioBg.play();
+
+        }
+
+        // Shuffle pieces at the start
+        shuffleArray(pieces);
+        const puzzleContainer = document.getElementById('puzzle-container');
+        pieces.forEach(piece => puzzleContainer.appendChild(piece));
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                timeDisplay.textContent = timeRemaining;
+
+                // Ending the game if time runs out
+                if (timeRemaining === 0) {
+                    clearInterval(timerInterval);
+                    endGame(false); // panggil endGame jika waktu habis
+                }
+            }, 1000);
+        }
+
+        let gameStarted = false;
+
+        pieces.forEach(piece => {
+            piece.addEventListener('click', () => {
+                if (!gameStarted) {
+                    startTimer();
+                    gameStarted = true;
+                }
+
+                // Prevent clicking on completed answers
+                if (piece.classList.contains('correct') || selectedPieces.includes(piece)) return;
+
+                if (selectedPieces.length < 2) {
+                    piece.classList.add('selected');
+                    selectedPieces.push(piece);
+                }
+
+                // Check for answers when two pieces are selected
+                if (selectedPieces.length === 2) {
+                    checkAnswers();
+                }
+            });
+        });
+
+        function checkAnswers() {
+            const [first, second] = selectedPieces;
+
+            // Cek jika pasangan cocok
+            if ((first.classList.contains('question') && second.classList.contains('answer') && first.dataset.answer === second.dataset.correct) ||
+                (first.classList.contains('answer') && second.classList.contains('question') && second.dataset.answer === first.dataset.correct)) {
+                markCorrect(first, second);
+            } else {
+                markIncorrect();
+            }
+
+            // Reset untuk memilih kembali
+            setTimeout(resetSelections, 1000);
+        }
+
+        function markCorrect(question, answer) {
+            question.classList.add('correct');
+            answer.classList.add('correct');
+            correctPairs++;
+
+            console.log(correctPairs);
+
+            // // Jika semua pasangan sudah dicocokkan
+            // if (correctPairs === 17) {
+            //     clearInterval(timerInterval); // Hentikan timer
+            //     finishButton.style.display = 'block'; // Tampilkan tombol untuk menyelesaikan permainan
+            // }
+        }
+
+        function markIncorrect() {
+            selectedPieces.forEach(piece => piece.classList.add('incorrect'));
+            result.textContent = "Jawaban salah!";
+        }
+
+        function resetSelections() {
+            selectedPieces.forEach(piece => {
+                piece.classList.remove('selected', 'incorrect');
+            });
+            selectedPieces = []; // Reset pilihan
+            result.textContent = ""; // Bersihkan hasil
+        }
+
+        
+        
+
+        function endGame(success) {
+            clearInterval(timerInterval); // Hentikan timer
+            pieces.forEach(piece => piece.style.cursor = 'default'); // Nonaktifkan klik setelah permainan selesai
+
+            
+            if(timeRemaining === 0) {
+                result.textContent = "Waktu habis";
+                scoreDisplay.textContent = "Score kamu : 0";
+                scoreDisplay.style.display = "block";
+                alert('Silahkan muat ulang atau refresh halaman permainan ini');
+            } else if (timeRemaining === 120) {
+                result.textContent = "Silahkan mulai permainan dengan mencocokkan kotak-kotak yang ada!";
+            }
+            else if (correctPairs >= 9) {
+                result.textContent = "Selamat, kamu berhasil menyelesaikan permainan";
+                scoreDisplay.textContent = "Skor kamu adalah: " + timeRemaining * 2;
+                
+                scoreDisplay.style.display = "block";
+                finishButton.style.display = "none";
+                nextPageButton.style.display = "block";
+            } else {
+                result.textContent = "Cocokkan semua kotak yang ada sebelum periksa jawaban ya!"
+
+                // timeRemaining = 120;
+                startTimer();
+                
+            }   
+        
+            
+            // // Tampilkan pesan akhir
+            // if (success) {
+            //     score = timeRemaining * 2; // Hitung skor berdasarkan waktu yang tersisa
+            //     scoreMuncul.style.display = "block";
+            //     scoreDisplay.textContent = score; // Tampilkan skor
+            //     // scoreDisplay.style.display = 'block'; // Tampilkan skor
+            //     result.textContent = "Selamat! Anda telah menyelesaikan puzzle!";
+            // } else {
+            //     result.textContent = "Waktu habis! Permainan selesai.";
+            //     scoreDisplay.textContent = "Skor: 0"; // Menampilkan skor nol ketika waktu habis
+            //     scoreDisplay.style.display = 'block'; // Tampilkan skor nol saat waktu habis
+            // }
+        }
+
+        // Function untuk menuju halaman berikutnya
+        function goToNextPage() {
+            // Ganti URL di bawah ini dengan URL halaman berikutnya
+            localStorage.setItem('scorePuzzleWord', timeRemaining*2);
+            window.location.href = "pesos-finish.html"; 
+        }
+
+    </script>
+</body>
+
+</html>
